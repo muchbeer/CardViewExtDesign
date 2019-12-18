@@ -2,14 +2,19 @@ package muchbeer.raum.cardviewextdesign;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.BlendMode;
+import android.graphics.BlendModeColorFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -21,14 +26,13 @@ public class GadielView extends View {
     private float mExampleDimension = 0; // TODO: use a default from R.dimen...
     private Drawable mGadielDrawable;
 
-    private TextPaint mTextPaint;
-    private float mTextWidth;
-    private float mTextHeight;
+
 
     private boolean mGainaStatusView;
     float mOutlineWidth;
     float mShapeShize;
-    float spacing;
+    float mSpacing;
+    Rect mModuleRectangle;
 
     private int mOutlineColor;
     private Paint mPaintOutline;
@@ -71,6 +75,17 @@ public class GadielView extends View {
 
     }
 
+    private void setupModuleRectangles() {
+
+        mModuleRectangle = new Rect();
+        int xOriginal  = 0;
+        int yOriginal = 0;
+        int xShapeSize = (int) mShapeShize;
+
+        mModuleRectangle = new Rect(xOriginal,yOriginal, xShapeSize, xShapeSize);
+
+
+    }
 
 
     @Override
@@ -86,10 +101,7 @@ public class GadielView extends View {
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
-        mFillColor = getContext().getResources().getColor(R.color.gadiel_red);
-        mPaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintFill.setStyle(Paint.Style.FILL);
-        mPaintFill.setColor(mFillColor);
+
 
         // Draw the example drawable on top of the text.
         if (mGadielDrawable != null) {
@@ -98,13 +110,39 @@ public class GadielView extends View {
            // mGadielDrawable.setColorFilter();
             mFillColorDrawable = Color.parseColor(mColorCode);
             PorterDuff.Mode mMode = PorterDuff.Mode.SRC_ATOP;
-           // mGadielDrawable.setColorFilter(mFillColor, PorterDuff.Mode.DST_OVER);
+            // mGadielDrawable.setColorFilter(mFillColorDrawable,mMode);
+
             mGadielDrawable.draw(canvas);
-            mGadielDrawable.setColorFilter(mFillColorDrawable,mMode);
+            mGadielDrawable.setTint(mFillColor);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+               // drawable.setColorFilter(new BlendModeColorFilter(color, BlendMode.SRC_ATOP));
+             //   mGadielDrawable.setColorFilter(new BlendModeColorFilter(mFillColor),BlendMode.SRC_ATOP);
+
+            } else {
+                //drawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+               // mGadielDrawable.setColorFilter(mFillColorDrawable,mMode);
+
+            }
+
+           // mGadielDrawable.clearColorFilter();
+          //  clearColorFilter();
+            //mGadielDrawable.setTint();
            // mGadielDrawable.
 
         }
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+            switch(event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    return true;
+            }
+
+        return super.onTouchEvent(event);
     }
 
     public Drawable getGadielDrawable() {
@@ -115,46 +153,11 @@ public class GadielView extends View {
         this.mGadielDrawable = gadielDrawable;
     }
 
-
-     /**
-     * Gets the example color attribute value.
-     *
-     * @return The example color attribute value.
-     */
-    public int getExampleColor() {
-        return mExampleColor;
+    public String getmColorCode() {
+        return mColorCode;
     }
 
-    /**
-     * Sets the view's example color attribute value. In the example view, this color
-     * is the font color.
-     *
-     * @param exampleColor The example color attribute value to use.
-     */
-    public void setExampleColor(int exampleColor) {
-        mExampleColor = exampleColor;
-       // invalidateTextPaintAndMeasurements();
+    public void setmColorCode(String mColorCode) {
+        this.mColorCode = mColorCode;
     }
-
-    /**
-     * Gets the example dimension attribute value.
-     *
-     * @return The example dimension attribute value.
-     */
-    public float getExampleDimension() {
-        return mExampleDimension;
-    }
-
-    /**
-     * Sets the view's example dimension attribute value. In the example view, this dimension
-     * is the font size.
-     *
-     * @param exampleDimension The example dimension attribute value to use.
-     */
-    public void setExampleDimension(float exampleDimension) {
-        mExampleDimension = exampleDimension;
-     //   invalidateTextPaintAndMeasurements();
-    }
-
-
 }

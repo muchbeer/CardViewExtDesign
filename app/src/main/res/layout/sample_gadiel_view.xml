@@ -4,13 +4,13 @@
     android:layout_height="match_parent">
 
     <muchbeer.raum.cardviewextdesign.GadielView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:background="#ccc"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="40dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
         app:gadielDrawable="@drawable/white_heart"
          />
 

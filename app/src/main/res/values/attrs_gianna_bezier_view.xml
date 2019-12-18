@@ -3,6 +3,12 @@
         <attr name="exampleString" format="string" />
         <attr name="exampleDimension" format="dimension" />
         <attr name="exampleColor" format="color" />
+        <attr name="outlineColor" format="color" />
+        <attr name="shapeSelection" format="enum">
+
+            <enum name="heart" value="0"/>
+            <enum name="square" value="1"/>
+        </attr>
         <attr name="exampleDrawable" format="color|reference" />
         <attr name="gadielDrawable" format="color|reference" />
 
